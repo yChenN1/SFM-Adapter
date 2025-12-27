@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
+  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UniVST: A Multi-Conditional Adapter for Unified Voice Style
+    Transfer with Style Manipulation</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">UniVST: A Multi-Conditional Adapter for Unified Voice Style
+            Transfer with Style Manipulation</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <p >Anonymous</a></p>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+          </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Voice Style Transfer (VST) modifies speech to match a reference style (e.g., timbre, emotion) while preserving its content. 
+            Most VST approaches pay attention to single style transfer and have made remarkable progress.
+            Recent approaches have attempted to transfer multiple styles by disentangling speech attributes and enabling controllable style conversion.
+            However, these methods typically rely on style-conditioned generation without considering the original speech style during training, leading to limited preservation of source speech attributes.
+          </p>
+          <p>
+            To address these issues, we formulate style transfer as a style-manipulation task that simply adjusts the style of the source speech instead of generating it from scratch. 
+            Therefore, we propose a unified Voice Style Transfer framework <b>UniVST</b> dedicated to transferring both single style and multiple styles.
+            Built on a Siamese-like diffusion model, UniVST consists of a Source Branch for extracting source speech features and a Conversion Branch for generating converted speech. 
+            We first employ a Multi-Condition Embedder (MCE) to extract rich style descriptions from natural language and precise timbre from personalized audio prompts.
+            We then propose a Multi-Conditional Adapter (MCA), which employs feature manipulation to extract and modulate style features from the source speech. 
+            These modulated style features are subsequently integrated into the conversion process via masked attention, enabling fine-grained style control while preserving the attributes of the source style.
+            During inference, classifier-free guidance improves transfer controllability, and a Large Audio-Language Model (LALM)-based Length Regulation refines speech rate and duration. 
+            Experimental results demonstrate that UniVST can achieve natural and accurate style transfer in multiple VST tasks compared to existing methods.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-3">Framework</h2>
+
+    <!-- Image 1 -->
+    <figure>
+      <img src="./static/image/framework.png" alt="Framework Overview" style="max-width: 100%;">
+      <figcaption style="margin-top: 0.5em;">Figure 1: Overall architecture of the proposed framework.</figcaption>
+    </figure>
+
+    <!-- Image 2 -->
+    <figure style="margin-top: 2em;">
+      <img src="./static/image/inference_all.png" alt="Inference Process" style="max-width: 100%;">
+      <figcaption style="margin-top: 0.5em;">Figure 2: Illustration of tempo estimation and the inference process of UniVST.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Multi-Style Transfer</h2>
+    <div class="content">
+      <p><strong>Inputs:</strong></p>
+      <ul>
+        <li><strong>Text Prompt</strong>: A sentence describing the intended speaking <em>style</em>.</li>
+        <li><strong>Audio Prompt</strong>: An audio sample representing the target <em>speaker identity</em>.</li>
+        <li><strong>Source Speech</strong>: The original input speech with the desired <em>content</em>.</li>
+      </ul>
+    </div>
+
+    <div class="box" style="overflow-x: auto; margin-top: 1.5em;">
+      <table class="table is-bordered is-striped is-hoverable is-fullwidth" style="min-width: 900px;">
+        <colgroup>
+          <col style="width: 17.5%;">
+          <col style="width: 17.5%;">
+          <col style="width: 30%;">
+          <col style="width: 17.5%;">
+          <col style="width: 17.5%;">
+        </colgroup>
+        <thead>
+          <tr class="has-background-light">
+            <th class="has-text-centered">Source Speech</th>
+            <th class="has-text-centered">Audio Prompt</th>
+            <th class="has-text-centered">Text Prompt</th>
+            <th class="has-text-centered">UniVST</th>
+            <th class="has-text-centered">Vevo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0013_000694.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0014_000694.wav"></audio></td>
+            <td style="text-align: justify; font-size: 0.9em;">With a regular pitch, the man takes his livid time to express himself, infusing his words with a hint of normal energy.</td>
+            <td><audio controls style="width: 100%;" src="./static/audio/PIDM_sty/PIDM_angry_0013_000694_to_angry_0014_000694.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/vevo_voice/vevovoice_angry_0013_000694_to_angry_0014_000694.wav"></audio></td>
+          </tr>
+          <tr>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0015_000692.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0020_001742.wav"></audio></td>
+            <td style="text-align: justify; font-size: 0.9em;">A stunned male speaker conveys thoughts with a standard pitch, addressing topics at an ordinary speed, and exuding low energy.</td>
+            <td><audio controls style="width: 100%;" src="./static/audio/PIDM_sty/PIDM_angry_0015_000692_to_surprised_0020_001742.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/vevo_voice/vevovoice_angry_0015_000692_to_surprised_0020_001742.wav"></audio></td>
+          </tr>
+          <tr>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0019_001745.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0013_001395.wav"></audio></td>
+            <td style="text-align: justify; font-size: 0.9em;">A fatigued disconsolate male voice, characterized by a slow speaking speed and a deep, low pitch, emits a subtle energy, resulting in a soothing audio experience that exudes tranquility.</td>
+            <td><audio controls style="width: 100%;" src="./static/audio/PIDM_sty/PIDM_surprised_0019_001745_to_sad_0013_001395.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/vevo_voice/vevovoice_surprised_0019_001745_to_sad_0013_001395.wav"></audio></td>
+          </tr>
+          <tr>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0011_000348.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0016_001398.wav"></audio></td>
+            <td style="text-align: justify; font-size: 0.9em;">Speaking with intention, her unhappy voice held a high pitch and low energy.</td>
+            <td><audio controls style="width: 100%;" src="./static/audio/PIDM_sty/PIDM_neutral_0011_000348_to_sad_0016_001398.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/vevo_voice/vevovoice_neutral_0011_000348_to_sad_0016_001398.wav"></audio></td>
+          </tr>
+          <tr>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0017_001746.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0018_001046.wav"></audio></td>
+            <td style="text-align: justify; font-size: 0.9em;">With a rapid speaking speed, she expressed her joyful viewpoint.</td>
+            <td><audio controls style="width: 100%;" src="./static/audio/PIDM_sty/PIDM_surprised_0017_001746_to_happy_0018_001046.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/vevo_voice/vevovoice_surprised_0017_001746_to_happy_0018_001046.wav"></audio></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Emotion Transfer</h2>
+    <div class="content">
+      <p><strong>Inputs:</strong></p>
+      <ul>
+        <li><strong>Text Prompt</strong>: A sentence or phrase that describes the intended speaking <em>style</em>.</li>
+        <li><strong>Source Speech</strong>: The original input speech containing the content to be retained.</li>
+      </ul>
+    </div>
+
+    <div class="box" style="overflow-x: auto; margin-top: 1.5em;">
+      <table class="table is-bordered is-striped is-hoverable is-fullwidth" style="min-width: 900px;">
+        <colgroup>
+          <col style="width: 11.6%;">
+          <col style="width: 11.6%;">
+          <col style="width: 30%;">
+          <col style="width: 11.6%;">
+          <col style="width: 11.6%;">
+          <col style="width: 11.6%;">
+          <col style="width: 11.6%;">
+        </colgroup>
+        <thead>
+          <tr class="has-background-light">
+            <th class="has-text-centered">Source Speech</th>
+            <th class="has-text-centered">Audio Prompt</th>
+            <th class="has-text-centered">Text Prompt</th>
+            <th class="has-text-centered">UniVST</th>
+            <th class="has-text-centered">AINN</th>
+            <th class="has-text-centered">Vevo</th>
+            <th class="has-text-centered">StyleVC</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/origin/0018_000692.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/origin/0016_000346.wav"></audio></td>
+            <td style="text-align: justify; font-size: 0.9em;">Whispering softly, her pitch remains high.</td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/pidm/pidm_angry_0018_000692_to_neutral_0016_000346.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/ainn/ainn_angry_0018_000692_to_neutral_0016_000346.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/vevo/vevo_angry_0018_000692_to_neutral_0016_000346.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/stylevc/stylevc_angry_0018_000692_to_neutral_0016_000346.wav"></audio></td>
+          </tr>
+          <tr>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/origin/0016_000695.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/origin/0015_001392.wav"></audio></td>
+            <td style="text-align: justify; font-size: 0.9em;">Her low-energy voice contrasts with her heartbroken high key.</td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/pidm/pidm_angry_0016_000695_to_sad_0015_001392.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/ainn/ainn_angry_0016_000695_to_sad_0015_001392.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/vevo/vevo_angry_0016_000695_to_sad_0015_001392.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/stylevc/stylevc_angry_0016_000695_to_sad_0015_001392.wav"></audio></td>
+          </tr>
+          <tr>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/origin/0014_001046.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/origin/0020_001394.wav"></audio></td>
+            <td style="text-align: justify; font-size: 0.9em;">The heartbroken man speaks in a rich, low voice with a measured cadence.</td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/pidm/pidm_happy_0014_001046_to_sad_0020_001394.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/ainn/ainn_happy_0014_001046_to_sad_0020_001394.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/vevo/vevo_happy_0014_001046_to_sad_0020_001394.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/stylevc/stylevc_happy_0014_001046_to_sad_0020_001394.wav"></audio></td>
+          </tr>
+          <tr>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/origin/0013_000350.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/origin/0017_001041.wav"></audio></td>
+            <td style="text-align: justify; font-size: 0.9em;">Speaking quickly with a high tone, her amused energy remained subdued.</td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/pidm/pidm_neutral_0013_000350_to_happy_0017_001041.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/ainn/ainn_neutral_0013_000350_to_happy_0017_001041.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/vevo/vevo_neutral_0013_000350_to_happy_0017_001041.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/stylevc/stylevc_neutral_0013_000350_to_happy_0017_001041.wav"></audio></td>
+          </tr>
+          <tr>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/origin/0012_001399.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/origin/0014_000699.wav"></audio></td>
+            <td style="text-align: justify; font-size: 0.9em;">A livid man addresses topics with a standard pitch, engaging in discourse at a usual speed, and with an undertone of low energy.</td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/pidm/pidm_sad_0012_001399_to_angry_0014_000699.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/ainn/ainn_sad_0012_001399_to_angry_0014_000699.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/vevo/vevo_sad_0012_001399_to_angry_0014_000699.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_evc/stylevc/stylevc_sad_0012_001399_to_angry_0014_000699.wav"></audio></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Timbre Transfer</h2>
+    <div class="content">
+      <p><strong>Inputs:</strong></p>
+      <ul>
+        <li><strong>Audio Prompt</strong>: An audio sample representing the target <em>speaker identity</em>.</li>
+        <li><strong>Source Speech</strong>: The original input speech containing the content to be retained.</li>
+      </ul>
+    </div>
+
+    <div class="box" style="overflow-x: auto; margin-top: 1.5em;">
+      <table class="table is-bordered is-striped is-hoverable is-fullwidth" style="min-width: 900px;">
+        <colgroup>
+          <col style="width: 12.5%;">
+          <col style="width: 12.5%;">
+          <col style="width: 12.5%;">
+          <col style="width: 12.5%;">
+          <col style="width: 12.5%;">
+          <col style="width: 12.5%;">
+          <col style="width: 12.5%;">
+          <col style="width: 12.5%;">
+        </colgroup>
+        <thead>
+          <tr class="has-background-light">
+            <th class="has-text-centered">Source Speech</th>
+            <th class="has-text-centered">Audio Prompt</th>
+            <th class="has-text-centered">DiffHier</th>
+            <th class="has-text-centered">FreeVC</th>
+            <th class="has-text-centered">DDDMVC</th>
+            <th class="has-text-centered">Vevo</th>
+            <th class="has-text-centered">StyleVC</th>
+            <th class="has-text-centered">UniVST</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/origin/p254_021.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/origin/p287_123.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/diffhier/diffhier_p254_021_to_p287_123.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/freevc/freevc_p254_021_to_p287_123.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/dddmvc/dddmvc_p254_021_to_p287_123.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/vevo/vevo_p254_021_to_p287_123.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/stylevc/stylevc_p254_021_to_p287_123.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/pidm/pidm_p254_021_to_p287_123.wav"></audio></td>
+          </tr>
+          <tr>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/origin/p276_330.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/origin/p362_385.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/diffhier/diffhier_p276_330_to_p362_385.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/freevc/freevc_p276_330_to_p362_385.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/dddmvc/dddmvc_p276_330_to_p362_385.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/vevo/vevo_p276_330_to_p362_385.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/stylevc/stylevc_p276_330_to_p362_385.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/pidm/pidm_p276_330_to_p362_385.wav"></audio></td>
+          </tr>
+          <tr>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/origin/p374_384.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/origin/p244_328.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/diffhier/diffhier_p374_384_to_p244_328.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/freevc/freevc_p374_384_to_p244_328.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/dddmvc/dddmvc_p374_384_to_p244_328.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/vevo/vevo_p374_384_to_p244_328.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/stylevc/stylevc_p374_384_to_p244_328.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/pidm/pidm_p374_384_to_p244_328.wav"></audio></td>
+          </tr>
+          <tr>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/origin/p282_077.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/origin/p303_011.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/diffhier/diffhier_p282_077_to_p303_011.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/freevc/freevc_p282_077_to_p303_011.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/dddmvc/dddmvc_p282_077_to_p303_011.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/vevo/vevo_p282_077_to_p303_011.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/stylevc/stylevc_p282_077_to_p303_011.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/pidm/pidm_p282_077_to_p303_011.wav"></audio></td>
+          </tr>
+          <tr>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/origin/p230_044.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/origin/p260_227.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/diffhier/diffhier_p230_044_to_p260_227.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/freevc/freevc_p230_044_to_p260_227.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/dddmvc/dddmvc_p230_044_to_p260_227.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/vevo/vevo_p230_044_to_p260_227.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/stylevc/stylevc_p230_044_to_p260_227.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/static_vc/pidm/pidm_p230_044_to_p260_227.wav"></audio></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+  <h2 class="title is-3">Prompt Design</h2>
+  <table class="table is-fullwidth is-bordered is-striped">
+    <thead>
+      <tr>
+        <th>Text Prompt</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>You are a perceptive assistant trained to evaluate the likely speech tempo implied by a text prompt.<br>
+
+          Your task is to:<br>
+          1. Extract key acoustic properties implied by the text (such as speech rate, pause expectation, clarity, emotional tone, energy level, etc.).<br>
+          2. Analyze how these properties would influence the pacing of the corresponding speech.<br>
+          3. Assign a tempo score between 0 and 1 based on your analysis:<br>
+          - 0 represents extremely slow delivery (very slow, calm, deliberate speech).<br>
+          - 1 represents extremely fast delivery (very rapid, energetic, compressed speech).<br>
+          - 0.5 represents a moderate pace (between slow and fast).<br>
+          - Values in between indicate intermediate tempo levels.</td>
+      </tr>
+      <tr>
+        <th>Audio Prompt</th>
+      </tr>
+      <tr>
+        <td>You are a perceptive assistant trained to evaluate the speech tempo of an audio clip.<br>
+          Your goal is to reason step by step like a human listener and assign a tempo score between 0 (extremely slow) and 1 (extremely fast). The higher the score, the faster the perceived speech tempo. <br>
+          Do not rely solely on raw speed metrics—consider how the speech feels holistically, including rhythm, clarity, pausing, and overall delivery style.<br>
+          The score must be a single number from 0 to 1, rounded to one decimal place.<br>
+          **Step 1: Pausing Pattern**  <br>
+          - Are there long silences or frequent pauses between words or phrases?  <br>
+          - Or does the speaker talk continuously with minimal interruption?<br>
+          **Step 2: Articulation Clarity**  <br>
+          - Are the words clearly enunciated and easy to understand?  <br>
+          - Or are they rushed, slurred, or overly compressed?<br>
+          **Step 3: Information Density & Rhythm**  <br>
+          - Does the speaker convey a large amount of information in a short time?  <br>
+          - Does the rhythm feel calm and measured, or fast and pressured?<br>
+</td>
+      </tr>
+      
+      <!-- 你可以继续添加更多行 -->
+    </tbody>
+  </table>
+</div>
+</section>
+
+
+
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page borrows from the <a
+              href="https://github.com/nerfies/nerfies.github.io">project</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer> 
+
+</body>
+</html>
