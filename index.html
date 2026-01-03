@@ -6,8 +6,8 @@
         content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
   <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>UniVST: A Multi-Conditional Adapter for Unified Voice Style
-    Transfer with Style Manipulation</title>
+  <title>SFM-Adapter: Style-aware Feature Manipulation Adapter for
+Speech Style Editing</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
@@ -49,16 +49,28 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">UniVST: A Multi-Conditional Adapter for Unified Voice Style
-            Transfer with Style Manipulation</h1>
+          <h1 class="title is-1 publication-title">USFM-Adapter: Style-aware Feature Manipulation Adapter for Speech Style Editing</h1>
           <div class="is-size-5 publication-authors">
+
             <span class="author-block">
-              <p >Anonymous</a></p>
-          </div>
+              <p>Yun Chen<sup>1</sup>, 
+                Haohe Liu<sup>1</sup>,
+                Qi Chen<sup>2</sup>, 
+                Arshdeep Singh<sup>3</sup>, 
+                Junqi Zhao<sup>1</sup>,</p>
+               <p>
+                Wenwu Wang<sup>1</sup>,
+                Philip J.B. Jackson<sup>1</sup>, 
+                Mark D. Plumbley<sup>3,*</sup></p>
+            </span>
 
-          <div class="is-size-5 publication-authors">
-          </div>
-
+           <span class="author-block"></span>
+              <p><sup>1</sup>Centre for Vision, Speech and Signal Processing, University of Surrey, United Kingdom</p>
+              <p><sup>2</sup>ByteDance Intelligent Creation, China</p>
+              <p><sup>3</sup>King’s College London, United Kingdom</p>
+            <span>
+            </div>
+            </div>
           </div>
         </div>
       </div>
@@ -79,20 +91,15 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Voice Style Transfer (VST) modifies speech to match a reference style (e.g., timbre, emotion) while preserving its content. 
-            Most VST approaches pay attention to single style transfer and have made remarkable progress.
-            Recent approaches have attempted to transfer multiple styles by disentangling speech attributes and enabling controllable style conversion.
-            However, these methods typically rely on style-conditioned generation without considering the original speech style during training, leading to limited preservation of source speech attributes.
-          </p>
-          <p>
-            To address these issues, we formulate style transfer as a style-manipulation task that simply adjusts the style of the source speech instead of generating it from scratch. 
-            Therefore, we propose a unified Voice Style Transfer framework <b>UniVST</b> dedicated to transferring both single style and multiple styles.
-            Built on a Siamese-like diffusion model, UniVST consists of a Source Branch for extracting source speech features and a Conversion Branch for generating converted speech. 
-            We first employ a Multi-Condition Embedder (MCE) to extract rich style descriptions from natural language and precise timbre from personalized audio prompts.
-            We then propose a Multi-Conditional Adapter (MCA), which employs feature manipulation to extract and modulate style features from the source speech. 
-            These modulated style features are subsequently integrated into the conversion process via masked attention, enabling fine-grained style control while preserving the attributes of the source style.
-            During inference, classifier-free guidance improves transfer controllability, and a Large Audio-Language Model (LALM)-based Length Regulation refines speech rate and duration. 
-            Experimental results demonstrate that UniVST can achieve natural and accurate style transfer in multiple VST tasks compared to existing methods.
+            Speech Style Editing (SSE) aims to modify selected style attributes (e.g., timbre, emotion, pitch) while preserving the linguistic content and all other style attributes that are not given. 
+            Many speech applications require flexible control over speech style, making SSE increasingly important.
+            Existing SSE approaches typically follow a style-generation paradigm that synthesizes non-linguistic attributes from style conditions. 
+            However, this often results in limited preservation of source attributes and insufficient flexibility when only a subset of style attributes is specified.
+            To overcome these limitations, we adopt a style editing paradigm, in which the target style is achieved by adjusting the source speech instead of producing speech from scratch.
+            Building on this paradigm, we propose a diffusion-based framework with a Style-aware Feature Manipulation Adapter (SFM-Adapter). 
+            The SFM-Adapter performs feature-level modulation by integrating user-provided style information with source speech features through multi-layer cross-attention. The resulting modulated features are incorporated into the generation process via mask attention.
+            During inference, a Large Audio-Language Model (LALM)-based length regulation is designed to predict speaking speed and adjust duration. 
+            Experiments across multiple speech style editing tasks demonstrate that the SFM-Adapter achieves more natural, accurate, and source-preserving style editing compared with existing methods.
           </p>
         </div>
       </div>
@@ -114,15 +121,15 @@
 
     <!-- Image 2 -->
     <figure style="margin-top: 2em;">
-      <img src="./static/image/inference_all.png" alt="Inference Process" style="max-width: 100%;">
-      <figcaption style="margin-top: 0.5em;">Figure 2: Illustration of tempo estimation and the inference process of UniVST.</figcaption>
+      <img src="./static/image/inference.png" alt="Inference Process" style="max-width: 100%;">
+      <figcaption style="margin-top: 0.5em;">Figure 2: Illustration of speed estimation and the inference process of SFM-Adapter.</figcaption>
     </figure>
   </div>
 </section>
 
 <section class="section">
   <div class="container is-max-desktop">
-    <h2 class="title is-3">Multi-Style Transfer</h2>
+    <h2 class="title is-3">Multi-Style Editing</h2>
     <div class="content">
       <p><strong>Inputs:</strong></p>
       <ul>
@@ -195,7 +202,7 @@
 
 <section class="section">
   <div class="container is-max-desktop">
-    <h2 class="title is-3">Emotion Transfer</h2>
+    <h2 class="title is-3">Expressive Style Editing</h2>
     <div class="content">
       <p><strong>Inputs:</strong></p>
       <ul>
@@ -280,7 +287,7 @@
 
 <section class="section">
   <div class="container is-max-desktop">
-    <h2 class="title is-3">Timbre Transfer</h2>
+    <h2 class="title is-3">Timbre Editing</h2>
     <div class="content">
       <p><strong>Inputs:</strong></p>
       <ul>
