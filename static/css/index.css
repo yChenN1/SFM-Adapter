@@ -2,6 +2,11 @@ body {
   font-family: 'Noto Sans', sans-serif;
 }
 
+/* Widen selected content sections without affecting the framework figures. */
+.container.is-max-desktop.is-wide-content {
+  max-width: 1000px !important;
+}
+
 
 .footer .icon-link {
     font-size: 25px;

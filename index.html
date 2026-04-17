@@ -84,7 +84,7 @@ Speech Style Editing</title>
 
 
 <section class="section">
-  <div class="container is-max-desktop">
+  <div class="container is-max-desktop is-wide-content">
     <!-- Abstract. -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
@@ -128,7 +128,7 @@ Speech Style Editing</title>
 </section>
 
 <section class="section">
-  <div class="container is-max-desktop">
+  <div class="container is-max-desktop is-wide-content">
     <h2 class="title is-3">Multi-Style Editing</h2>
     <div class="content">
       <p><strong>Inputs:</strong></p>
@@ -137,22 +137,27 @@ Speech Style Editing</title>
         <li><strong>Audio Prompt</strong>: An audio sample representing the target <em>speaker identity</em>.</li>
         <li><strong>Source Speech</strong>: The original input speech with the desired <em>content</em>.</li>
       </ul>
+      <p>
+        <strong>Note:</strong> In SFM-Adapter, style editing is guided by the <em>text prompt</em> while timbre is controlled by the <em>audio prompt</em>. In contrast, Vevo relies on the <em>audio prompt</em> for both style and timbre, making it less flexible when fine-grained textual control is desired.
+      </p>
     </div>
 
-    <div class="box" style="overflow-x: auto; margin-top: 1.5em;">
-      <table class="table is-bordered is-striped is-hoverable is-fullwidth" style="min-width: 900px;">
+    <div class="box" style="margin-top: 1.5em;">
+      <table class="table is-bordered is-striped is-hoverable is-fullwidth">
         <colgroup>
-          <col style="width: 17.5%;">
-          <col style="width: 17.5%;">
-          <col style="width: 30%;">
-          <col style="width: 17.5%;">
-          <col style="width: 17.5%;">
+          <col style="width: 12%;">
+          <col style="width: 12%;">
+          <col style="width: 34%;">
+          <col style="width: 12%;">
+          <col style="width: 15%;">
+          <col style="width: 15%;">
         </colgroup>
         <thead>
           <tr class="has-background-light">
             <th class="has-text-centered">Source Speech</th>
             <th class="has-text-centered">Audio Prompt</th>
             <th class="has-text-centered">Text Prompt</th>
+            <th class="has-text-centered">Target</th>
             <th class="has-text-centered">SFM-Adapter</th>
             <th class="has-text-centered">Vevo</th>
           </tr>
@@ -160,36 +165,41 @@ Speech Style Editing</title>
         <tbody>
           <tr>
             <td><audio controls style="width: 100%;" src="./static/audio/origin/0013_000694.wav"></audio></td>
-            <td><audio controls style="width: 100%;" src="./static/audio/origin/0014_000694.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0014_000478.wav"></audio></td>
             <td style="text-align: justify; font-size: 0.9em;">With a regular pitch, the man takes his livid time to express himself, infusing his words with a hint of normal energy.</td>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0014_000694.wav"></audio></td>
             <td><audio controls style="width: 100%;" src="./static/audio/PIDM_sty/PIDM_angry_0013_000694_to_angry_0014_000694.wav"></audio></td>
             <td><audio controls style="width: 100%;" src="./static/audio/vevo_voice/vevovoice_angry_0013_000694_to_angry_0014_000694.wav"></audio></td>
           </tr>
           <tr>
             <td><audio controls style="width: 100%;" src="./static/audio/origin/0015_000692.wav"></audio></td>
-            <td><audio controls style="width: 100%;" src="./static/audio/origin/0020_001742.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0020_001408.wav"></audio></td>
             <td style="text-align: justify; font-size: 0.9em;">A stunned male speaker conveys thoughts with a standard pitch, addressing topics at an ordinary speed, and exuding low energy.</td>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0020_001742.wav"></audio></td>
             <td><audio controls style="width: 100%;" src="./static/audio/PIDM_sty/PIDM_angry_0015_000692_to_surprised_0020_001742.wav"></audio></td>
             <td><audio controls style="width: 100%;" src="./static/audio/vevo_voice/vevovoice_angry_0015_000692_to_surprised_0020_001742.wav"></audio></td>
           </tr>
           <tr>
             <td><audio controls style="width: 100%;" src="./static/audio/origin/0019_001745.wav"></audio></td>
-            <td><audio controls style="width: 100%;" src="./static/audio/origin/0013_001395.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0013_001057.wav"></audio></td>
             <td style="text-align: justify; font-size: 0.9em;">A fatigued disconsolate male voice, characterized by a slow speaking speed and a deep, low pitch, emits a subtle energy, resulting in a soothing audio experience that exudes tranquility.</td>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0013_001395.wav"></audio></td>
             <td><audio controls style="width: 100%;" src="./static/audio/PIDM_sty/PIDM_surprised_0019_001745_to_sad_0013_001395.wav"></audio></td>
             <td><audio controls style="width: 100%;" src="./static/audio/vevo_voice/vevovoice_surprised_0019_001745_to_sad_0013_001395.wav"></audio></td>
           </tr>
           <tr>
             <td><audio controls style="width: 100%;" src="./static/audio/origin/0011_000348.wav"></audio></td>
-            <td><audio controls style="width: 100%;" src="./static/audio/origin/0016_001398.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0016_001397.wav"></audio></td>
             <td style="text-align: justify; font-size: 0.9em;">Speaking with intention, her unhappy voice held a high pitch and low energy.</td>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0016_001398.wav"></audio></td>
             <td><audio controls style="width: 100%;" src="./static/audio/PIDM_sty/PIDM_neutral_0011_000348_to_sad_0016_001398.wav"></audio></td>
             <td><audio controls style="width: 100%;" src="./static/audio/vevo_voice/vevovoice_neutral_0011_000348_to_sad_0016_001398.wav"></audio></td>
           </tr>
           <tr>
             <td><audio controls style="width: 100%;" src="./static/audio/origin/0017_001746.wav"></audio></td>
-            <td><audio controls style="width: 100%;" src="./static/audio/origin/0018_001046.wav"></audio></td>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0018_001049.wav"></audio></td>
             <td style="text-align: justify; font-size: 0.9em;">With a rapid speaking speed, she expressed her joyful viewpoint.</td>
+            <td><audio controls style="width: 100%;" src="./static/audio/origin/0018_001046.wav"></audio></td>
             <td><audio controls style="width: 100%;" src="./static/audio/PIDM_sty/PIDM_surprised_0017_001746_to_happy_0018_001046.wav"></audio></td>
             <td><audio controls style="width: 100%;" src="./static/audio/vevo_voice/vevovoice_surprised_0017_001746_to_happy_0018_001046.wav"></audio></td>
           </tr>
@@ -201,7 +211,7 @@ Speech Style Editing</title>
 
 
 <section class="section">
-  <div class="container is-max-desktop">
+  <div class="container is-max-desktop is-wide-content">
     <h2 class="title is-3">Expressive Style Editing</h2>
     <div class="content">
       <p><strong>Inputs:</strong></p>
@@ -286,7 +296,7 @@ Speech Style Editing</title>
 </section>
 
 <section class="section">
-  <div class="container is-max-desktop">
+  <div class="container is-max-desktop is-wide-content">
     <h2 class="title is-3">Timbre Editing</h2>
     <div class="content">
       <p><strong>Inputs:</strong></p>
